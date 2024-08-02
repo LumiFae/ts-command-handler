@@ -1,39 +1,72 @@
-import { readdirSync } from "fs";
-import { Client, GatewayIntentBits } from "discord.js";
-import dotenv from "dotenv";
-import { Command } from "./types/discord";
-dotenv.config();
+import type {
+    AnySelectMenuInteraction,
+    ApplicationCommandOption,
+    AutocompleteInteraction,
+    ButtonInteraction,
+    ChatInputCommandInteraction,
+    MessageContextMenuCommandInteraction,
+    ModalSubmitInteraction,
+    UserContextMenuCommandInteraction,
+    StringSelectMenuInteraction,
+} from "discord.js";
 
-if (!process.env.TOKEN) throw Error("You need to provide a token");
+export type Command =
+    | {
+          role: "CHAT_INPUT";
+          run: (interaction: ChatInputCommandInteraction) => unknown;
+          name: string;
+          name_localizations?: Record<string, string>;
+          description: string;
+          description_localizations?: Record<string, string>;
+          options?: ApplicationCommandOption[];
+          default_member_permissions?: string;
+          nsfw?: boolean;
+          integration_types?: number[];
+          contexts?: number[];
+      }
+    | {
+          role: "MESSAGE_CONTEXT_MENU";
+          run: (interaction: MessageContextMenuCommandInteraction) => unknown;
+          name: string;
+          name_localizations?: Record<string, string>;
+          description_localizations?: Record<string, string>;
+          options?: ApplicationCommandOption[];
+          default_member_permissions?: string;
+          nsfw?: boolean;
+          integration_types?: number[];
+          contexts?: number[];
+      }
+    | {
+          role: "USER_CONTEXT_MENU";
+          run: (interaction: UserContextMenuCommandInteraction) => unknown;
+          name: string;
+          name_localizations?: Record<string, string>;
+          description_localizations?: Record<string, string>;
+          options?: ApplicationCommandOption[];
+          default_member_permissions?: string;
+          nsfw?: boolean;
+          integration_types?: number[];
+          contexts?: number[];
+      }
+    | {
+          role: "SELECT_MENU";
+          custom_id: string;
+          run: (interaction: StringSelectMenuInteraction) => unknown;
+      }
+    | {
+          role: "BUTTON";
+          custom_id: string;
+          run: (interaction: ButtonInteraction) => unknown;
+      }
+    | {
+          role: "MODAL_SUBMIT";
+          custom_id: string;
+          run: (interaction: ModalSubmitInteraction) => unknown;
+      }
+    | {
+          role: "AUTOCOMPLETE";
+          name: `${string}-autocomplete`;
+          run: (interaction: AutocompleteInteraction) => unknown;
+      };
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-
-export const commands = new Map<string, Command>();
-
-const eventFolders = readdirSync("./src/events");
-for (const folder of eventFolders) {
-    switch (folder) {
-        case "discord": {
-            readdirSync(`./src/events/${folder}`).forEach(
-                (file) => {
-                    import(`./events/${folder}/${file}`).then((event) => {
-                        event.default(client);
-                    });
-                },
-            );
-            break;
-        }
-        default: {
-            readdirSync(`.src/events/${folder}`).forEach(
-                (file) => {
-                    import(`./events/${folder}/${file}`).then((event) => {
-                        event.default();
-                    });
-                },
-            );
-            break;
-        }
-    }
-}
-
-client.login(process.env.TOKEN);
+export type CommandNoRun = Omit<Command, "run">;
