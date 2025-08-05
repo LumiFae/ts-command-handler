@@ -10,7 +10,9 @@
         "strict": true,
         "noImplicitAny": false,
         "outDir": "./dist",
-        "rootDir": "./src"
+        "rootDir": "./src",
+        "module": "es2022",
+        "moduleResolution": "nodenext"
     },
     "exclude": ["node_modules", "dist"]
 }

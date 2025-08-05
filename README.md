@@ -45,7 +45,6 @@ The command class differs depending on the role of the command, here are the cur
 -   `SELECT_MENU`: This is the role for select menus, this is the role you want if you want to make a select menu.
 -   `BUTTON`: This is the role for button interactions, if you want something to happen when you click a button, use this role.
 -   `MODAL_SUBMIT`: This is the role for modals that are submitted, if you want to do something when a modal is submitted, use this role.
--   `AUTOCOMPLETE`: When autocomplete is ran, this role will be triggered to get a response.
 
 All these classes do different things as explained above, and because of that the information you need to give will differ. Here is the information you need to give for each role:
 
@@ -55,7 +54,6 @@ All these classes do different things as explained above, and because of that th
 -   `SELECT_MENU`: You will have to give the custom_id of the interaction (this is to indicate which select menu to work with when you interact with a certain select menu, you will add a custom_id to a select menu when you define it, make sure it's the same in the select menu file). Check the [Discord Developer Docs](https://discord.com/developers/docs/interactions/message-components#select-menus) for more information.
 -   `BUTTON`: You will have to give the custom_id of the interaction (this is to indicate which button interaction should be ran when you click a certain button, you will add a custom_id to a button when you define it, make sure it's the same in the button file). Check the [Discord Developer Docs](https://discord.com/developers/docs/interactions/message-components#buttons) for more information.
 -   `MODAL_SUBMIT`: You will have to give the custom_id of the interaction (this is to indicate which modal should be ran when you submit a certain modal, you will add a custom_id to a modal when you define it, make sure it's the same in the modal file). Check the [Discord Developer Docs](https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-modal) for more information.
--   `AUTOCOMPLETE`: You will have to give the name of the command that this autocomplete will be running on, for instance if you need autocomplete on the help command, you will call the autocomplete `help-autocomplete`. You need to add `-autocomplete` on every name here, you will get an error anyway if you don't. For more information check [the Discord Developer Docs](https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure)
 
 ### As for running the interactions.
 
