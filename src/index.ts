@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import { Command } from './types/discord';
 dotenv.config();
 
-if (!process.env.TOKEN) throw Error('You need to provide a token');
+if (!process.env.TOKEN) throw new Error('You need to provide a token');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
