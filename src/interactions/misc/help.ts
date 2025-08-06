@@ -22,4 +22,9 @@ export default {
 		const row = new ActionRowBuilder<ButtonBuilder>().setComponents(button);
 		await interaction.reply({ content: 'blah', components: [row] });
 	},
+	autocomplete: (interaction) => {
+		// void is used here to destroy the unused var error.
+		void interaction;
+		return [{ value: 'hi', name: 'hi' }];
+	},
 } satisfies Command;

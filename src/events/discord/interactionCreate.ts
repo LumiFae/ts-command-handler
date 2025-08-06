@@ -15,7 +15,7 @@ export default function(client: Client) {
 		console.log(`Executing interaction ${finder}...`);
 		try {
 			if (interaction.isAutocomplete() && 'autocomplete' in command) {
-				await command.autocomplete(interaction);
+				await command.autocomplete?.(interaction);
 			}
 			else {
 				await (command.run as (interaction: Interaction) => unknown)(
@@ -25,8 +25,7 @@ export default function(client: Client) {
 			console.log(`Interaction ${finder} executed successfully!`);
 		}
 		catch (error) {
-			console.log(`Error while executing interaction ${finder}:`);
-			console.error(error);
+			console.error(`Error while executing interaction ${finder}:`, error);
 			if (interaction.isCommand()) {
 				if (interaction.deferred || interaction.replied) {
 					await interaction.editReply({

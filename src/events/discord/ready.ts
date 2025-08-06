@@ -17,15 +17,15 @@ export default function(client: Client) {
 					'name' in command ? command.name : command.custom_id,
 				)
 			) {
-				throw Error(
+				throw new Error(
 					`Duplicate command name or custom_id (${file})`,
 				);
 			}
 			commands.set(
 				'name' in command ? command.name : command.custom_id,
-                command as Command,
+				command,
 			);
-			if ('name' in command && command.role !== 'AUTOCOMPLETE') {
+			if ('name' in command) {
 				if (command.role !== 'CHAT_INPUT') {
 					command.type =
                         command.role === 'MESSAGE_CONTEXT_MENU' ? 3 : 2;
